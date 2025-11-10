@@ -20,10 +20,11 @@ Dự án này tự động:
 
 ```mermaid
 graph TD
-A[📄 CV PDF] --> B[📘 PyMuPDF + PDFPlumber → Trích xuất văn bản]
-B --> C[🧩 LayoutLMv3 → Giữ bố cục + embedding 768D]
-C --> D[🧹 Làm sạch & tái cấu trúc CV]
-D --> E[🔒 Remove Personal Info (Qwen2-7B)]
-E --> F[🧬 Gemini Pro → Trích xuất structured JSON]
-F --> G[📊 Gemini Pro → Tính điểm matching với JD]
-G --> H[✅ JSON kết quả + Matching score]
+    A[📄 CV PDF] --> B[📘 PyMuPDF + PDFPlumber: Trích xuất văn bản]
+    B --> C[🧩 LayoutLMv3: Giữ bố cục + embedding 768D]
+    C --> D[🧹 Làm sạch & tái cấu trúc CV]
+    D --> E[🔒 Remove Personal Info (Qwen2-7B)]
+    E --> F[🧠 Gemini Pro: Trích xuất structured JSON]
+    F --> G[📊 Gemini Pro: Tính điểm matching với JD]
+    G --> H[✅ Xuất JSON kết quả + Matching Score]
+
