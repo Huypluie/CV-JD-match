@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bảng Điều Khiển Việc Làm</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col"
+  style="font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';">
+  <!-- Navbar -->
+  <nav class="bg-white/80 backdrop-filter backdrop-blur border-b border-gray-200 sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="h-14 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2">
+          <span class="inline-block w-2 h-6 bg-gradient-to-b from-blue-600 to-indigo-600 rounded"></span>
+          <span class="font-semibold text-gray-800">CV-JD Matcher</span>
+        </a>
+        <div class="flex items-center gap-4 text-sm">
+          <a href="/" class="text-gray-600 hover:text-gray-900">Trang chủ</a>
+          <a href="/" class="text-gray-900 font-medium">Việc Làm</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content wrapper -->
+  <div class="flex-1">
+    <!-- Hero -->
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex items-center justify-between">
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Quản lý Job</h1>
+          <button id="btnNewJob" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-sm">+ Tạo
+            Job mới</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto py-8 px-4">
+
+      <div id="jobList" class="grid xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-1 gap-6">
+        {% for job in jobs %}
+        <div data-card="{{job.id}}"
+          class="bg-white rounded-xl shadow-sm hover:shadow-md hover:ring-1 hover:ring-blue-100 transition p-6 relative border border-gray-100 cursor-pointer">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1">
+              <h2 class="text-xl font-bold tracking-tight">{{ job.name }}</h2>
+              <div class="text-xs text-gray-400 mt-1">Tạo lúc {{ job.created_at }}</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-gray-700 line-clamp-4">
+            {{ job.jd_text[:220] }}{% if job.jd_text|length > 220 %}...{% endif %}
+          </p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-xs text-gray-500">CV: {{ job.cvs|length }}</div>
+            <div class="flex items-center gap-2">
+              <button data-edit="{{job.id}}"
+                class="inline-flex items-center justify-center h-9 w-20 text-sm rounded-lg bg-sky-50 text-sky-700 border border-sky-200 hover:bg-sky-100">Sửa</button>
+              <input data-jd-input="{{job.id}}" type="file" accept=".pdf,.doc,.docx" class="hidden" />
+              <button data-jd="{{job.id}}"
+                class="inline-flex items-center justify-center h-9 w-24 text-sm rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100">Thay
+                JD</button>
+              <button data-del="{{job.id}}"
+                class="inline-flex items-center justify-center h-9 w-20 text-white text-sm rounded-lg bg-red-600 hover:bg-red-700">Xóa</button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-12 border-t border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-gray-500 flex items-center justify-between">
+      <span>© {{ 2025 }} CV-JD Matcher</span>
+      <div class="space-x-4">
+        <a href="/" class="hover:text-gray-700">Trang chủ</a>
+        <a href="/" class="hover:text-gray-700">Việc Làm</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Chat Widget (Messenger-like) -->
+  <style>
+    .fbchat-btn {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 9999px;
+      background: #1877F2;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
+      cursor: pointer;
+      z-index: 60
+    }
+
+    .fbchat-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 84px;
+      width: 360px;
+      max-width: 92vw;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .2);
+      display: none;
+      flex-direction: column;
+      z-index: 60
+    }
+
+    .fbchat-header {
+      background: #1877F2;
+      color: #fff;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .fbchat-title {
+      font-weight: 600
+    }
+
+    .fbchat-close {
+      background: rgba(255, 255, 255, .2);
+      border: 0;
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px 8px;
+      cursor: pointer
+    }
+
+    .fbchat-body {
+      height: 360px;
+      overflow: auto;
+      background: #f7f7f8;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .fbchat-msg {
+      max-width: 78%;
+      padding: 10px 12px;
+      border-radius: 16px;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      font-size: 14px
+    }
+
+    .fbchat-user {
+      align-self: flex-end;
+      background: #0084FF;
+      color: #fff;
+      border-bottom-right-radius: 6px
+    }
+
+    .fbchat-bot {
+      align-self: flex-start;
+      background: #e4e6eb;
+      color: #111827;
+      border-bottom-left-radius: 6px
+    }
+
+    .fbchat-input {
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      border-top: 1px solid #e5e7eb;
+      background: #fff
+    }
+
+    .fbchat-input input {
+      flex: 1;
+      border: 1px solid #e5e7eb;
+      border-radius: 9999px;
+      padding: 10px 14px;
+      font-size: 14px
+    }
+
+    .fbchat-input button {
+      border: 0;
+      background: #1d1f23;
+      color: #fff;
+      border-radius: 9999px;
+      padding: 10px 14px;
+      cursor: pointer
+    }
+  </style>
+  <div id="fbchat" class="fbchat-panel">
+    <div class="fbchat-header">
+      <div class="fbchat-title">Hỗ trợ tuyển dụng</div>
+      <button class="fbchat-close" onclick="toggleChat(false)">Ẩn</button>
+    </div>
+    <div id="fbchatBody" class="fbchat-body"></div>
+    <div class="fbchat-input">
+      <input id="fbchatInput" placeholder="Nhập tin nhắn..." />
+      <button id="fbchatSend" onclick="fbchatSend()">Gửi</button>
+    </div>
+  </div>
+  <div class="fbchat-btn" onclick="toggleChat()" title="Chat hỗ trợ">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4h16v12H7l-3 3V4z" fill="currentColor" />
+    </svg>
+  </div>
+  <script>
+    function toggleChat(open) {
+      const panel = document.getElementById('fbchat');
+      const isOpen = panel.style.display === 'flex';
+      const next = (open === undefined) ? !isOpen : !!open;
+      panel.style.display = next ? 'flex' : 'none';
+      if (next && !panel.dataset.init) {
+        panel.dataset.init = '1';
+        fbchatAppend('Xin chào! Tôi có thể hỗ trợ gì cho bạn?', 'bot');
+      }
+      if (next) { setTimeout(() => document.getElementById('fbchatInput').focus(), 50); }
+    }
+    function fbchatAppend(text, role) {
+      const body = document.getElementById('fbchatBody');
+      const div = document.createElement('div');
+      div.className = 'fbchat-msg ' + (role === 'user' ? 'fbchat-user' : 'fbchat-bot');
+      div.textContent = text;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+    }
+    async function fbchatSend() {
+      const input = document.getElementById('fbchatInput');
+      const text = (input.value || '').trim();
+      if (!text) return;
+      fbchatAppend(text, 'user');
+      input.value = '';
+      const btn = document.getElementById('fbchatSend');
+      btn.disabled = true; btn.textContent = '...';
+      try {
+        const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
+        const data = await res.json();
+        if (data.reply) { fbchatAppend(data.reply, 'bot'); }
+        else fbchatAppend('Lỗi: ' + (data.error || 'không xác định'), 'bot');
+      } catch (e) { fbchatAppend('Không gửi được tin nhắn.', 'bot'); }
+      finally { btn.disabled = false; btn.textContent = 'Gửi'; }
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target && e.target.id === 'fbchatInput') {
+        e.preventDefault(); fbchatSend();
+      }
+    });
+  </script>
+  <!-- Modal tạo job -->
+  <div id="jobModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+    <div class="bg-white rounded shadow-lg w-full max-w-lg p-6">
+      <h3 class="text-xl font-semibold mb-4">Tạo Job mới</h3>
+      <form id="formCreateJob">
+        <label class="block text-sm font-medium mb-1">Tên Job</label>
+        <input type="text" name="name" class="w-full border rounded px-3 py-2 mb-4"
+          placeholder="VD: Lập trình viên Python Senior" required />
+        <label class="block text-sm font-medium mb-1">Tải JD Lên (PDF/DOC/DOCX)</label>
+        <div class="flex items-center border rounded px-3 py-2 w-full bg-white">
+          <label for="jd-upload"
+            class="cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm mr-3">Chọn
+            tệp</label>
+          <span id="file-chosen" class="text-gray-500 text-sm truncate">Chưa chọn tệp nào</span>
+          <input id="jd-upload" type="file" name="jd" accept=".pdf,.doc,.docx" class="hidden" required
+            onchange="document.getElementById('file-chosen').textContent = this.files.length > 0 ? this.files[0].name : 'Chưa chọn tệp nào'" />
+        </div>
+        <div class="flex justify-end space-x-2 mt-4">
+          <button type="button" id="btnCancel" class="px-4 py-2 border rounded">Hủy</button>
+          <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Lưu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const btnNewJob = document.getElementById('btnNewJob');
+    const jobModal = document.getElementById('jobModal');
+    const btnCancel = document.getElementById('btnCancel');
+    const formCreateJob = document.getElementById('formCreateJob');
+
+    btnNewJob.addEventListener('click', () => jobModal.classList.remove('hidden'));
+    btnCancel.addEventListener('click', () => jobModal.classList.add('hidden'));
+
+    formCreateJob.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(formCreateJob);
+      try {
+        const res = await fetch('/jobs', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Tạo công việc thất bại');
+        window.location.href = `/jobs/${data.job.id}/view`;
+      } catch (err) {
+        alert('Lỗi: ' + err.message);
+      }
+    });
+
+    // Card click to view detail (ignore clicks on buttons/inputs/links)
+    document.querySelectorAll('[data-card]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('button, input, a, label')) return;
+        const id = card.getAttribute('data-card');
+        window.location.href = `/jobs/${id}/view`;
+      });
+    });
+
+    document.querySelectorAll('[data-edit]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-edit');
+        const name = prompt('Nhập tên Job mới:');
+        if (!name) return;
+        const fd = new FormData();
+        fd.append('name', name);
+        const res = await fetch(`/jobs/${id}`, { method: 'PATCH', body: fd });
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || 'Cập nhật thất bại'); return; }
+        location.reload();
+      });
+    });
+
+    document.querySelectorAll('[data-del]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-del');
+        if (!confirm('Xóa Job này?')) return;
+        const res = await fetch(`/jobs/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || 'Xóa thất bại'); return; }
+        location.reload();
+      });
+    });
+
+    document.querySelectorAll('[data-jd]').forEach(btn => {
+      const id = btn.getAttribute('data-jd');
+      const input = document.querySelector(`[data-jd-input="${id}"]`);
+      btn.addEventListener('click', () => input.click());
+      input.addEventListener('change', async () => {
+        if (!input.files.length) return;
+        const fd = new FormData();
+        fd.append('jd', input.files[0]);
+        const res = await fetch(`/jobs/${id}/jd`, { method: 'PATCH', body: fd });
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || 'Thay JD thất bại'); return; }
+        location.reload();
+      });
+    });
+  </script>
+</body>
+
+</html>

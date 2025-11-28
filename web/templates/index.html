@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống So Khớp CV-JD</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .drop-zone {
+            border: 2px dashed #4a90e2;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drop-zone.drag-over {
+            background-color: #f0f7ff;
+            border-color: #3b82f6;
+        }
+
+        .tab-active {
+            border-bottom: 2px solid #3b82f6;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .skill-matched {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .skill-missing {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+
+        .experience-item {
+            border-left: 3px solid #3b82f6;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .loading-cv {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Hệ Thống So Khớp CV-JD</h1>
+            <p class="text-gray-600">Tải lên CV và Mô tả công việc để tìm sự phù hợp nhất</p>
+        </header>
+
+        <!-- CV Upload Section -->
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">1. Tải Lên CV Của Bạn</h2>
+            <div id="cv-drop-zone" class="drop-zone p-6 text-center cursor-pointer mb-4">
+                <div class="space-y-2">
+                    <div class="mx-auto w-12 h-12 text-blue-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-md font-medium text-gray-700">Kéo và thả CV của bạn (PDF/DOCX)</p>
+                        <p class="text-sm text-gray-500">hoặc nhấp để duyệt tệp</p>
+                    </div>
+                    <input id="cv-file-input" type="file" accept=".pdf,.doc,.docx" class="hidden" />
+                </div>
+            </div>
+            <div id="cv-preview" class="hidden mt-4">
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-1 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Phân Tích CV Hoàn Tất
+                    </h3>
+                    <p id="cv-file-name" class="text-sm text-gray-500 mb-4"></p>
+                    <div id="cv-comprehensive-info" class="space-y-6"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JD Upload Section -->
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">2. Tải Lên Mô Tả Công Việc</h2>
+
+            <!-- Tabs -->
+            <div class="flex border-b mb-4">
+                <button id="file-tab" class="px-4 py-2 tab-active">Tải Tệp</button>
+                <button id="text-tab" class="px-4 py-2">Dán Văn Bản</button>
+            </div>
+
+            <!-- File Upload Tab -->
+            <div id="file-upload-tab">
+                <div id="jd-drop-zone" class="drop-zone p-6 text-center cursor-pointer mb-4">
+                    <div class="space-y-2">
+                        <div class="mx-auto w-12 h-12 text-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-md font-medium text-gray-700">Kéo và thả Mô tả công việc (PDF/DOCX)</p>
+                            <p class="text-sm text-gray-500">hoặc nhấp để duyệt tệp</p>
+                        </div>
+                        <input id="jd-file-input" type="file" accept=".pdf,.doc,.docx" class="hidden" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Input Tab -->
+            <div id="text-input-tab" class="hidden">
+                <textarea id="jd-text-input"
+                    class="w-full h-40 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Dán mô tả công việc vào đây..."></textarea>
+                <button id="submit-jd-text"
+                    class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Gửi</button>
+            </div>
+
+            <div id="jd-preview" class="hidden mt-4 p-4 bg-gray-50 rounded-lg">
+                <h3 class="font-medium text-gray-700">Xem Trước Mô Tả Công Việc</h3>
+                <p id="jd-file-name" class="text-sm text-gray-500 mt-1"></p>
+                <div id="jd-content" class="mt-2 text-sm text-gray-600 max-h-40 overflow-y-auto"></div>
+            </div>
+        </div>
+
+        <!-- Match Button -->
+        <div class="max-w-4xl mx-auto text-center mb-8">
+            <button id="match-button"
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled>
+                So Khớp CV Với Mô Tả Công Việc
+            </button>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="hidden text-center py-8">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            <p class="mt-4 text-gray-600">Đang xử lý...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="hidden max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <h2 class="text-2xl font-bold text-center mb-6">Kết Quả So Khớp</h2>
+
+                <!-- Matching Score -->
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center">
+                        <div class="relative">
+                            <svg class="w-32 h-32" viewBox="0 0 36 36">
+                                <path d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e6e6e6" stroke-width="3"
+                                    stroke-dasharray="100, 100" />
+                                <path id="score-circle" d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#3b82f6" stroke-width="3"
+                                    stroke-dasharray="0, 100" style="transition: stroke-dasharray 1s ease-in-out;" />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span id="match-score" class="text-3xl font-bold">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="match-feedback" class="mt-4 text-gray-600"></p>
+                </div>
+
+                <!-- Matched Skills -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-3">Kỹ Năng Phù Hợp</h3>
+                    <div id="matched-skills" class="flex flex-wrap gap-2">
+                        <!-- Skills will be added here -->
+                    </div>
+                </div>
+
+                <!-- Missing Skills -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-3">Kỹ Năng Cần Cải Thiện</h3>
+                    <div id="missing-skills" class="flex flex-wrap gap-2">
+                        <!-- Missing skills will be added here -->
+                    </div>
+                </div>
+
+                <!-- CV Details -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold mb-3">Chi Tiết CV</h3>
+                    <div id="cv-details" class="space-y-4">
+                        <!-- CV details will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const cvDropZone = document.getElementById('cv-drop-zone');
+        const cvFileInput = document.getElementById('cv-file-input');
+        const jdDropZone = document.getElementById('jd-drop-zone');
+        const jdFileInput = document.getElementById('jd-file-input');
+        const jdTextInput = document.getElementById('jd-text-input');
+        const fileTab = document.getElementById('file-tab');
+        const textTab = document.getElementById('text-tab');
+        const fileUploadTab = document.getElementById('file-upload-tab');
+        const textInputTab = document.getElementById('text-input-tab');
+        const submitJdText = document.getElementById('submit-jd-text');
+        const matchButton = document.getElementById('match-button');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+        const matchScore = document.getElementById('match-score');
+        const scoreCircle = document.getElementById('score-circle');
+        const matchFeedback = document.getElementById('match-feedback');
+        const matchedSkills = document.getElementById('matched-skills');
+        const missingSkills = document.getElementById('missing-skills');
+        const cvDetails = document.getElementById('cv-details');
+        const jdContent = document.getElementById('jd-content');
+        const cvPreview = document.getElementById('cv-preview');
+        const jdPreview = document.getElementById('jd-preview');
+        const cvInfo = document.getElementById('cv-comprehensive-info');
+
+        // State
+        let cvData = null;
+        let jdText = '';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setupDragAndDrop(cvDropZone, cvFileInput, handleCvFile);
+            setupDragAndDrop(jdDropZone, jdFileInput, handleJdFile);
+
+            // Tab switching
+            fileTab.addEventListener('click', () => switchTab('file'));
+            textTab.addEventListener('click', () => switchTab('text'));
+
+            // Submit JD text
+            submitJdText.addEventListener('click', handleJdTextSubmit);
+
+            // Match button
+            matchButton.addEventListener('click', handleMatch);
+
+            // Check if we have data from session
+            if (window.cvData) {
+                cvData = window.cvData;
+                displayCvInfo(cvData);
+                cvPreview.classList.remove('hidden');
+                updateMatchButton();
+            }
+
+            if (window.jdText) {
+                jdText = window.jdText;
+                jdContent.textContent = jdText.length > 500 ? jdText.substring(0, 500) + '...' : jdText;
+                jdPreview.classList.remove('hidden');
+                updateMatchButton();
+            }
+        });
+
+        // Setup drag and drop for a zone
+        function setupDragAndDrop(dropZone, fileInput, callback) {
+            // Drag and drop handlers
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => highlight(dropZone), false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => unhighlight(dropZone), false);
+            });
+
+            // Handle dropped files
+            dropZone.addEventListener('drop', handleDrop, false);
+            dropZone.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', (e) => callback(e.target.files[0]));
+        }
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(element) {
+            element.classList.add('bg-blue-50', 'border-blue-400');
+        }
+
+        function unhighlight(element) {
+            element.classList.remove('bg-blue-50', 'border-blue-400');
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const file = dt.files[0];
+            if (file) {
+                if (e.target === cvDropZone || e.target.closest('#cv-drop-zone')) {
+                    handleCvFile(file);
+                } else if (e.target === jdDropZone || e.target.closest('#jd-drop-zone')) {
+                    handleJdFile(file);
+                }
+            }
+        }
+
+        // Handle CV file upload
+        async function handleCvFile(file) {
+            if (!file) return;
+
+            const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!validTypes.some(type => file.type.includes(type))) {
+                alert('Vui lòng tải lên tài liệu PDF hoặc Word');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Show CV loading state
+            showCvLoading();
+            showLoading(true);
+
+            try {
+                // Show selected filename
+                const cvFileNameEl = document.getElementById('cv-file-name');
+                if (cvFileNameEl) cvFileNameEl.textContent = `Tệp: ${file.name}`;
+
+                const response = await fetch('/upload-cv', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    cvData = data.cv_data;
+                    displayCvInfo(cvData);
+                    updateMatchButton();
+                } else {
+                    throw new Error(data.error || 'Không thể xử lý CV');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                console.error('Error:', error);
+                cvPreview.classList.add('hidden');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Handle JD file upload
+        async function handleJdFile(file) {
+            if (!file) return;
+
+            const mimeTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            const hasValidMime = file.type && mimeTypes.includes(file.type);
+            const lowerName = (file.name || '').toLowerCase();
+            const hasValidExt = lowerName.endsWith('.pdf') || lowerName.endsWith('.doc') || lowerName.endsWith('.docx');
+            if (!hasValidMime && !hasValidExt) {
+                alert('Vui lòng tải lên tài liệu PDF hoặc Word (.pdf, .doc, .docx)');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Show selected filename immediately
+            const jdFileNameEl = document.getElementById('jd-file-name');
+            if (jdFileNameEl) jdFileNameEl.textContent = `Tệp: ${file.name}`;
+            jdPreview.classList.remove('hidden');
+
+            showLoading(true);
+            try {
+                const response = await fetch('/upload-jd', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    jdText = data.jd_text || '';
+                    jdContent.textContent = jdText.length > 500 ? jdText.substring(0, 500) + '...' : jdText;
+                    updateMatchButton();
+                } else {
+                    throw new Error(data.error || 'Không thể xử lý JD');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                console.error('Error:', error);
+                // Hide preview on error
+                jdPreview.classList.add('hidden');
+                const jdFileNameEl2 = document.getElementById('jd-file-name');
+                if (jdFileNameEl2) jdFileNameEl2.textContent = '';
+                jdContent.textContent = '';
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Handle JD text submit
+        async function handleJdTextSubmit() {
+            const text = jdTextInput.value.trim();
+            if (!text) {
+                alert('Vui lòng nhập mô tả công việc');
+                return;
+            }
+
+            showLoading(true);
+            try {
+                const formData = new FormData();
+                formData.append('jd_text', text);
+
+                const response = await fetch('/upload-jd', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    jdText = data.jd_text;
+                    jdContent.textContent = jdText.length > 500 ? jdText.substring(0, 500) + '...' : jdText;
+                    jdPreview.classList.remove('hidden');
+                    updateMatchButton();
+                } else {
+                    throw new Error(data.error || 'Không thể xử lý JD');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                console.error('Error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Switch between file upload and text input tabs
+        function switchTab(tab) {
+            if (tab === 'file') {
+                fileTab.classList.add('tab-active');
+                textTab.classList.remove('tab-active');
+                fileUploadTab.classList.remove('hidden');
+                textInputTab.classList.add('hidden');
+            } else {
+                textTab.classList.add('tab-active');
+                fileTab.classList.remove('tab-active');
+                textInputTab.classList.remove('hidden');
+                fileUploadTab.classList.add('hidden');
+            }
+        }
+
+        // Update match button state
+        function updateMatchButton() {
+            if (cvData && jdText) {
+                matchButton.disabled = false;
+            } else {
+                matchButton.disabled = true;
+            }
+        }
+
+        // Handle match button click
+        async function handleMatch() {
+            if (!cvData || !jdText) return;
+
+            showLoading(true);
+            try {
+                const response = await fetch('/ai-match-detailed', {
+                    method: 'POST'
+                });
+
+                let data;
+                let isJson = false;
+                try {
+                    data = await response.clone().json();
+                    isJson = true;
+                } catch (_) {
+                    isJson = false;
+                }
+
+                if (!isJson) {
+                    const text = await response.text();
+                    throw new Error(`Máy chủ không trả về JSON. Trạng thái ${response.status}. Nội dung bắt đầu bằng: ${text.substring(0, 200)}`);
+                }
+
+                if (response.ok) {
+                    const mapped = {
+                        status: 'success',
+                        score: (data && data.overall_score && Number.isFinite(Number(data.overall_score.score))) ? Number(data.overall_score.score) : 0,
+                        matched_skills: (data && data.criteria_analysis && data.criteria_analysis.skills && Array.isArray(data.criteria_analysis.skills.cv_matches)) ? data.criteria_analysis.skills.cv_matches : [],
+                        missing_skills: (data && data.criteria_analysis && data.criteria_analysis.skills && Array.isArray(data.criteria_analysis.skills.missing)) ? data.criteria_analysis.skills.missing : []
+                    };
+                    displayResults(mapped);
+                } else {
+                    throw new Error(data.error || 'Không thể tính toán so khớp');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                console.error('Error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Show loading state for CV processing
+        function showCvLoading() {
+            const loadingHtml = `
+                <div class="info-card">
+                    <div class="flex items-center mb-4">
+                        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mr-3"></div>
+                        <h4 class="text-lg font-semibold text-gray-800">Đang xử lý CV...</h4>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="loading-cv h-4 rounded"></div>
+                        <div class="loading-cv h-4 rounded w-3/4"></div>
+                        <div class="loading-cv h-4 rounded w-1/2"></div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('cv-comprehensive-info').innerHTML = loadingHtml;
+            document.getElementById('cv-preview').classList.remove('hidden');
+        }
+
+        // Display comprehensive CV information
+        function displayCvInfo(data) {
+            if (!data) return;
+
+            let html = '';
+
+            // Personal Information Section
+            if (data.personal_info) {
+                const info = data.personal_info;
+                html += `
+                    <div class="info-card">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                            </svg>
+                            Thông tin cá nhân
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
+
+                if (info.name) html += `<div><span class="text-sm font-medium text-gray-500">Họ và tên</span><p class="text-gray-800 font-medium">${info.name}</p></div>`;
+                if (info.email) html += `<div><span class="text-sm font-medium text-gray-500">Email</span><p class="text-gray-800">${info.email}</p></div>`;
+                if (info.phone) html += `<div><span class="text-sm font-medium text-gray-500">SĐT</span><p class="text-gray-800">${info.phone}</p></div>`;
+                if (info.date_of_birth) html += `<div><span class="text-sm font-medium text-gray-500">Ngày sinh</span><p class="text-gray-800">${info.date_of_birth}</p></div>`;
+                if (info.gender) html += `<div><span class="text-sm font-medium text-gray-500">Giới tính</span><p class="text-gray-800">${info.gender}</p></div>`;
+                if (info.address) html += `<div class="md:col-span-2"><span class="text-sm font-medium text-gray-500">Địa chỉ</span><p class="text-gray-800">${info.address}</p></div>`;
+
+                html += '</div></div>';
+            }
+
+            // Skills Section
+            if (data.skills && data.skills.length > 0) {
+                html += `
+                    <div class="info-card">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            Kỹ năng & Chuyên môn
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                `;
+
+                data.skills.forEach(skill => {
+                    if (skill && skill.trim()) {
+                        html += `<span class="skill-tag">${skill.trim()}</span>`;
+                    }
+                });
+
+                html += '</div></div>';
+            }
+
+            // Work Experience Section
+            if (data.experience && data.experience.length > 0) {
+                html += `
+                    <div class="info-card">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
+                            </svg>
+                            Kinh nghiệm làm việc
+                        </h4>
+                        <div class="space-y-4">
+                `;
+
+                data.experience.forEach((exp, index) => {
+                    html += `<div class="experience-item">`;
+                    if (exp.title) html += `<h5 class="font-semibold text-gray-800">${exp.title}</h5>`;
+                    if (exp.company) html += `<p class="text-blue-600 font-medium">${exp.company}</p>`;
+                    if (exp.duration) html += `<p class="text-sm text-gray-500 mb-2">${exp.duration}</p>`;
+                    if (exp.description) html += `<p class="text-gray-700 text-sm">${exp.description}</p>`;
+                    html += `</div>`;
+                });
+
+                html += '</div></div>';
+            }
+
+            // Education Section
+            if (data.education && data.education.length > 0) {
+                html += `
+                    <div class="info-card">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                            </svg>
+                            Học vấn
+                        </h4>
+                        <div class="space-y-3">
+                `;
+
+                data.education.forEach(edu => {
+                    html += `<div class="border-l-2 border-indigo-200 pl-4">`;
+                    if (edu.degree) html += `<h5 class="font-semibold text-gray-800">${edu.degree}</h5>`;
+                    if (edu.institution) html += `<p class="text-indigo-600 font-medium">${edu.institution}</p>`;
+                    if (edu.year) html += `<p class="text-sm text-gray-500">${edu.year}</p>`;
+                    if (edu.description) html += `<p class="text-gray-700 text-sm mt-1">${edu.description}</p>`;
+                    html += `</div>`;
+                });
+
+                html += '</div></div>';
+            }
+
+            // If no data available
+            if (!html) {
+                html = `
+                    <div class="info-card text-center py-8">
+                        <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <p class="text-gray-500">CV đã được xử lý thành công, nhưng không trích xuất được thông tin chi tiết.</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('cv-comprehensive-info').innerHTML = html;
+        }
+
+        // Display matching results
+        function displayResults(data) {
+            if (data.status !== 'success') {
+                throw new Error(data.error || 'Không thể lấy kết quả so khớp');
+            }
+
+            // Update score
+            const score = data.score || 0;
+            matchScore.textContent = `${score}%`;
+
+            // Animate score circle (0-100)
+            scoreCircle.setAttribute('stroke-dasharray', `${score}, 100`);
+
+            // Set score color
+            if (score >= 70) {
+                scoreCircle.style.stroke = '#10B981'; // Green
+                matchFeedback.textContent = 'Rất phù hợp! Ứng viên này rất thích hợp cho vị trí.';
+            } else if (score >= 40) {
+                scoreCircle.style.stroke = '#3B82F6'; // Blue
+                matchFeedback.textContent = 'Phù hợp. Ứng viên có một số kỹ năng và kinh nghiệm liên quan.';
+            } else {
+                scoreCircle.style.stroke = '#EF4444'; // Red
+                matchFeedback.textContent = 'Ít phù hợp. Ứng viên có thể không phải là lựa chọn tốt nhất cho vị trí này.';
+            }
+
+            // Display matched skills
+            matchedSkills.innerHTML = '';
+            if (data.matched_skills && data.matched_skills.length > 0) {
+                data.matched_skills.forEach(skill => {
+                    const skillEl = document.createElement('span');
+                    skillEl.className = 'skill-matched px-3 py-1 rounded-full text-sm font-medium';
+                    skillEl.textContent = skill;
+                    matchedSkills.appendChild(skillEl);
+                });
+            } else {
+                matchedSkills.innerHTML = '<p class="text-gray-500">Không tìm thấy kỹ năng phù hợp.</p>';
+            }
+
+            // Display missing skills
+            missingSkills.innerHTML = '';
+            if (data.missing_skills && data.missing_skills.length > 0) {
+                data.missing_skills.forEach(skill => {
+                    const skillEl = document.createElement('span');
+                    skillEl.className = 'skill-missing px-3 py-1 rounded-full text-sm font-medium';
+                    skillEl.textContent = skill;
+                    missingSkills.appendChild(skillEl);
+                });
+            } else {
+                missingSkills.innerHTML = '<p class="text-gray-500">Tất cả các kỹ năng đều phù hợp!</p>';
+            }
+
+            // Display CV details in results section
+            if (cvData) {
+                displayCvDetailsInResults(cvData);
+            }
+
+            // Show results
+            results.classList.remove('hidden');
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Display CV details in the results section
+        function displayCvDetailsInResults(data) {
+            if (!data) return;
+
+            let html = '';
+
+            // Personal Information Summary
+            if (data.personal_info && data.personal_info.name) {
+                html += `
+                    <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Hồ sơ ứng viên</h4>
+                        <p class="text-lg font-medium text-blue-600">${data.personal_info.name}</p>
+                        ${data.personal_info.email ? `<p class="text-sm text-gray-600">${data.personal_info.email}</p>` : ''}
+                        ${data.personal_info.phone ? `<p class="text-sm text-gray-600">${data.personal_info.phone}</p>` : ''}
+                    </div>
+                `;
+            }
+
+            // Skills Summary
+            if (data.skills && data.skills.length > 0) {
+                html += `
+                    <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Tất cả kỹ năng</h4>
+                        <div class="flex flex-wrap gap-2">
+                `;
+                data.skills.forEach(skill => {
+                    if (skill && skill.trim()) {
+                        html += `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${skill.trim()}</span>`;
+                    }
+                });
+                html += '</div></div>';
+            }
+
+            // Experience Summary
+            if (data.experience && data.experience.length > 0) {
+                html += `
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Tóm tắt kinh nghiệm</h4>
+                        <div class="space-y-2">
+                `;
+                data.experience.slice(0, 3).forEach(exp => {
+                    html += `<div class="text-sm">`;
+                    if (exp.title && exp.company) {
+                        html += `<span class="font-medium">${exp.title}</span> at <span class="text-blue-600">${exp.company}</span>`;
+                        if (exp.duration) html += ` <span class="text-gray-500">(${exp.duration})</span>`;
+                    }
+                    html += `</div>`;
+                });
+                if (data.experience.length > 3) {
+                    html += `<p class="text-xs text-gray-500 mt-2">+ ${data.experience.length - 3} vị trí khác</p>`;
+                }
+                html += '</div></div>';
+            }
+
+            document.getElementById('cv-details').innerHTML = html;
+        }
+
+        // Show/hide loading indicator
+        function showLoading(show) {
+            if (show) {
+                loading.classList.remove('hidden');
+            } else {
+                loading.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+
+</html>

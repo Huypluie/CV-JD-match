@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MatchCV - Tìm Kiếm Sự Phù Hợp Hoàn Hảo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#005A9C",
+            "secondary": "#00A99D",
+            "background-light": "#F5F7FA",
+            "background-dark": "#101822",
+            "text-light": "#333333",
+            "text-dark": "#F5F7FA",
+            "border-light": "#E1E5E8",
+            "border-dark": "#333333"
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-center whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark bg-opacity-80 backdrop-blur-sm">
+<div class="flex items-center justify-between w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
+<div class="flex items-center gap-4 text-text-light dark:text-text-dark">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">MatchCV</h2>
+</div>
+<nav class="hidden md:flex flex-1 justify-center items-center gap-9">
+<a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Tìm Việc</a>
+<a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Nhà Tuyển Dụng</a>
+<a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Về Chúng Tôi</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-text-light dark:text-text-dark border border-border-light dark:border-border-dark hover:bg-gray-200 dark:hover:bg-gray-700 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Đăng Nhập</span>
+</button>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90">
+<span class="truncate">Đăng Ký</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<div class="px-4 sm:px-6 lg:px-8 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-7xl flex-1 gap-10 md:gap-16">
+<!-- HeroSection -->
+<section class="flex flex-col gap-6 text-center py-10 md:py-20">
+<h1 class="text-4xl font-black leading-tight tracking-[-0.033em] md:text-6xl text-text-light dark:text-text-dark">Tìm Kiếm Sự Phù Hợp Hoàn Hảo.</h1>
+<p class="text-base font-normal leading-normal max-w-2xl mx-auto md:text-lg text-gray-600 dark:text-gray-300">Nền tảng hỗ trợ AI của chúng tôi kết nối các chuyên gia tài năng với các công ty hàng đầu bằng cách so khớp CV với Mô tả công việc ngay lập tức.</p>
+<div class="mt-4 flex flex-col sm:flex-row gap-2 items-center justify-center max-w-3xl w-full mx-auto p-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-border-light dark:border-border-dark">
+<label class="flex items-center w-full sm:w-1/2 h-12">
+<span class="material-symbols-outlined text-gray-400 pl-3">work</span>
+<input class="form-input flex-1 w-full min-w-0 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-gray-400 pl-2 text-base font-normal leading-normal" placeholder="Chức danh, Từ khóa hoặc Công ty" value=""/>
+</label>
+<div class="h-6 w-px bg-border-light dark:bg-border-dark hidden sm:block"></div>
+<label class="flex items-center w-full sm:w-1/2 h-12">
+<span class="material-symbols-outlined text-gray-400 pl-3">location_on</span>
+<input class="form-input flex-1 w-full min-w-0 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-gray-400 pl-2 text-base font-normal leading-normal" placeholder="Địa điểm" value=""/>
+</label>
+<button class="flex w-full sm:w-auto min-w-[100px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90">
+<span class="truncate">Tìm kiếm</span>
+</button>
+</div>
+</section>
+<!-- FeatureSection / Dual-Persona Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 py-10">
+<div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark bg-white dark:bg-gray-800 p-8 text-center items-center">
+<div class="text-primary" data-icon="Upload"><span class="material-symbols-outlined !text-4xl">person_search</span></div>
+<h2 class="text-2xl font-bold leading-tight">Dành Cho Người Tìm Việc</h2>
+<p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">Tải lên CV của bạn và để AI tìm những công việc phù hợp nhất, tối đa hóa cơ hội phỏng vấn.</p>
+<button class="mt-4 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-secondary text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90">
+<span class="truncate">Tải CV &amp; Tìm Việc</span>
+</button>
+</div>
+<div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark bg-white dark:bg-gray-800 p-8 text-center items-center">
+<div class="text-primary" data-icon="Briefcase"><span class="material-symbols-outlined !text-4xl">business_center</span></div>
+<h2 class="text-2xl font-bold leading-tight">Dành Cho Nhà Tuyển Dụng</h2>
+<p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">Tìm nguồn ứng viên đã được sàng lọc trước, phù hợp cao ngay lập tức và giảm đáng kể thời gian tuyển dụng.</p>
+<a class="mt-4 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-secondary text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90" href="/jobs-page">
+<span class="truncate">Đăng Tin &amp; Tìm Nhân Tài</span>
+</a>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="px-4 py-10 md:py-16 text-center">
+<h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] mb-4">Cách Thức Hoạt Động</h2>
+<p class="text-lg text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">Quy trình đơn giản, tinh gọn để kết nối nhân tài với cơ hội.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center justify-center size-16 rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-3xl">upload_file</span></div>
+<h3 class="text-xl font-bold">1. Gửi Tài Liệu</h3>
+<p class="text-gray-600 dark:text-gray-300">Người tìm việc tải lên CV, nhà tuyển dụng đăng Mô tả công việc.</p>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center justify-center size-16 rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-3xl">model_training</span></div>
+<h3 class="text-xl font-bold">2. So Khớp Bằng AI</h3>
+<p class="text-gray-600 dark:text-gray-300">Thuật toán thông minh của chúng tôi phân tích và chấm điểm sự phù hợp.</p>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center justify-center size-16 rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-3xl">hub</span></div>
+<h3 class="text-xl font-bold">3. Kết Nối &amp; Tuyển Dụng</h3>
+<p class="text-gray-600 dark:text-gray-300">Kết nối với các ứng viên hàng đầu hoặc cơ hội việc làm lý tưởng ngay lập tức.</p>
+</div>
+</div>
+</section>
+<!-- Featured Listings Section -->
+<section class="px-4 py-10 md:py-16">
+<h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] text-center mb-10">Cơ Hội Nổi Bật</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Job Card 1 -->
+<div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark bg-white dark:bg-gray-800 p-6 hover:shadow-lg transition-shadow duration-300">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-lg font-bold">Senior Product Designer</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Innovate Inc.</p>
+</div>
+<img class="rounded-full" data-alt="Innovate Inc. logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt28L-frFK9vAC_LSroKWyCdN1xtHXUq-MWfBLlWmerBo6Shv-Dm2Ki-NNjerBk5ngSP8Yai5gZf_rUudJIRa9RXaDwS_RrmP2r0tXBQ3-YplNe6Olkd9Cmzrcq2UDNmZFf2_htqsB4JIg5WrrlSKjc7FPy0iDz1j6Wetm6T4rhK-9duOZIu248MNw3QU1SfCcpvddCHjMiyRcwY_xGwPRrze17QCCmaaweu3NUEhvwjPHyLvFAAdL9Kl-JCrFNRH42xcIFO973Us"/>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined !text-lg">location_on</span>
+<span>San Francisco, CA</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">We are looking for a creative Senior Product Designer to join our team and help shape the future of our user experience...</p>
+<a class="mt-auto text-sm font-bold text-primary hover:underline" href="#">Xem Chi Tiết</a>
+</div>
+<!-- Job Card 2 -->
+<div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark bg-white dark:bg-gray-800 p-6 hover:shadow-lg transition-shadow duration-300">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-lg font-bold">Lead Backend Engineer</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Data Solutions</p>
+</div>
+<img class="rounded-full" data-alt="Data Solutions logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsgM8pxCIm9ozzNLuh9q_9L8_J8g0ytbb2KJnP8zC9rtlgsmNOW_-QZp7WUWb6Qj9fsWsJvH_wMtEiAZCCa4CkRnDYOQ7xF46yrmxuBSz9z4A6pI5deG5WwD98KzWkdTm6_fZWtej7xj4exajTVdRo00AXffeCIwnCJMPxevxE75WSi60K4osOupFF_liQQODwsyhHUR5SoCkuWn7fQvOeGIa5kpQxtVgmTzH6UfU9UXeJ83Hd822T6_w-sPIXOt_IEP864H9x95Y"/>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined !text-lg">location_on</span>
+<span>New York, NY (Remote)</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">Lead a team of talented engineers to build scalable and robust backend systems for our data-intensive applications.</p>
+<a class="mt-auto text-sm font-bold text-primary hover:underline" href="#">Xem Chi Tiết</a>
+</div>
+<!-- Job Card 3 -->
+<div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark bg-white dark:bg-gray-800 p-6 hover:shadow-lg transition-shadow duration-300">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-lg font-bold">Digital Marketing Manager</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Growth Co.</p>
+</div>
+<img class="rounded-full" data-alt="Growth Co. logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1BJ8dWJkDVdTDC5WzgFzv7OnWvyI1pDcnN9HbYS_Qw0k3xgLYwVBV6hfZV1zO-QIvcsSVam8Bu4gdrkUTqALL02DUqGVPDtzQ25SdEM8WXkvvBoXtjbojBzHRcSqvVhML5mtXb3Uov27Z8u3mqLmLk-G1sIZMYyd-3PWsDNH4Yvy-cVewCFhmSqdO1BFhI_XirWnklXNSxHCfa5e43GjkFDeIBQQS65CoBEAQ7FLjCy5otksnZ0U7tkCEsIM7_C3rosdhl3mIta0"/>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined !text-lg">location_on</span>
+<span>Austin, TX</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">Develop and execute comprehensive digital marketing strategies to drive lead generation and brand awareness.</p>
+<a class="mt-auto text-sm font-bold text-primary hover:underline" href="#">Xem Chi Tiết</a>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<div class="col-span-2 md:col-span-1">
+<div class="flex items-center gap-2">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight text-text-light dark:text-text-dark">MatchCV</h2>
+</div>
+<p class="mt-4 text-sm">Tương lai của tuyển dụng là đây. Thông minh hơn, nhanh hơn và chính xác hơn cho mọi người.</p>
+</div>
+<div>
+<h3 class="text-sm font-bold tracking-wider uppercase text-text-light dark:text-text-dark">Công Ty</h3>
+<ul class="mt-4 space-y-2">
+<li><a class="text-base hover:text-primary" href="#">Về Chúng Tôi</a></li>
+<li><a class="text-base hover:text-primary" href="#">Tuyển Dụng</a></li>
+<li><a class="text-base hover:text-primary" href="#">Liên Hệ</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-sm font-bold tracking-wider uppercase text-text-light dark:text-text-dark">Tài Nguyên</h3>
+<ul class="mt-4 space-y-2">
+<li><a class="text-base hover:text-primary" href="#">Blog</a></li>
+<li><a class="text-base hover:text-primary" href="#">Trung Tâm Trợ Giúp</a></li>
+<li><a class="text-base hover:text-primary" href="#">Chính Sách Bảo Mật</a></li>
+<li><a class="text-base hover:text-primary" href="#">Điều Khoản Dịch Vụ</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-sm font-bold tracking-wider uppercase text-text-light dark:text-text-dark">Kết Nối</h3>
+<div class="flex mt-4 space-x-4">
+<a class="text-gray-400 hover:text-primary" href="#"><span class="sr-only">Facebook</span><svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg></a>
+<a class="text-gray-400 hover:text-primary" href="#"><span class="sr-only">Twitter</span><svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg></a>
+<a class="text-gray-400 hover:text-primary" href="#"><span class="sr-only">LinkedIn</span><svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" fill-rule="evenodd"></path></svg></a>
+</div>
+</div>
+</div>
+<div class="mt-8 border-t border-border-light dark:border-border-dark pt-8 text-center text-sm">
+<p>© 2024 MatchCV, Inc. Đã đăng ký bản quyền.</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

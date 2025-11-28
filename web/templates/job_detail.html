@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết Công Việc</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col"
+  style="font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';">
+  <!-- Navbar -->
+  <nav class="bg-white/80 backdrop-filter backdrop-blur border-b border-gray-200 sticky top-0 z-30">
+    <div class="max-w-screen-2xl mx-auto px-6">
+      <div class="h-14 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2">
+          <span class="inline-block w-2 h-6 bg-gradient-to-b from-blue-600 to-indigo-600 rounded"></span>
+          <span class="font-semibold text-gray-800">CV-JD Matcher</span>
+        </a>
+        <div class="flex items-center gap-4 text-sm">
+          <a href="/" class="text-gray-600 hover:text-gray-900">Trang chủ</a>
+          <a href="/" class="text-gray-900 font-medium">Việc Làm</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content wrapper -->
+  <div class="flex-1">
+    <!-- Hero -->
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
+      <div class="max-w-screen-2xl mx-auto px-6 py-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <a href="/jobs-page" class="text-sm text-blue-700 hover:underline">← Quay lại danh sách Job</a>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mt-1">{{ job.name }}</h1>
+          </div>
+          <div class="hidden md:flex items-center gap-2">
+            <button id="btnEditJobName" class="px-3 py-1.5 border rounded-lg hover:bg-white">Đổi tên</button>
+            <input id="inputReplaceJD" type="file" accept=".pdf,.doc,.docx" class="hidden" />
+            <button id="btnReplaceJD" class="px-3 py-1.5 border rounded-lg hover:bg-white">Thay JD</button>
+            <button id="btnDeleteJob" class="px-3 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700">Xóa
+              Job</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-screen-2xl mx-auto py-8 px-6">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:col-span-1">
+          <h2 class="text-lg font-semibold mb-2">Mô Tả Công Việc</h2>
+          <pre
+            class="text-sm leading-6 whitespace-pre-wrap text-gray-700 max-h-80 overflow-auto">{{ job.jd_text }}</pre>
+          {% if job.jd_file %}
+          <p class="text-xs text-gray-500 mt-2">Tệp: {{ job.jd_file }}</p>
+          {% endif %}
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:col-span-2">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold">Quản lý CV</h2>
+            <div>
+              <input id="cvFiles" type="file" multiple accept=".pdf,.doc,.docx" class="hidden" />
+              <button id="btnUpload"
+                class="bg-green-600 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-green-700">Tải CV Lên</button>
+            </div>
+          </div>
+          <div id="cvList" class="space-y-4"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Footer -->
+  <footer class="mt-12 border-t border-gray-200">
+    <div class="max-w-screen-2xl mx-auto px-6 py-6 text-sm text-gray-500 flex items-center justify-between">
+      <span>© {{ 2025 }} CV-JD Matcher</span>
+      <div class="space-x-4">
+        <a href="/" class="hover:text-gray-700">Trang chủ</a>
+        <a href="/" class="hover:text-gray-700">Việc Làm</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Chat Widget (Messenger-like) -->
+  <style>
+    .fbchat-btn {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 9999px;
+      background: #1877F2;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
+      cursor: pointer;
+      z-index: 60
+    }
+
+    .fbchat-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 84px;
+      width: 360px;
+      max-width: 92vw;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .2);
+      display: none;
+      flex-direction: column;
+      z-index: 60
+    }
+
+    .fbchat-header {
+      background: #1877F2;
+      color: #fff;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .fbchat-title {
+      font-weight: 600
+    }
+
+    .fbchat-close {
+      background: rgba(255, 255, 255, .2);
+      border: 0;
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px 8px;
+      cursor: pointer
+    }
+
+    .fbchat-body {
+      height: 360px;
+      overflow: auto;
+      background: #f7f7f8;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .fbchat-msg {
+      max-width: 78%;
+      padding: 10px 12px;
+      border-radius: 16px;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      font-size: 14px
+    }
+
+    .fbchat-user {
+      align-self: flex-end;
+      background: #0084FF;
+      color: #fff;
+      border-bottom-right-radius: 6px
+    }
+
+    .fbchat-bot {
+      align-self: flex-start;
+      background: #e4e6eb;
+      color: #111827;
+      border-bottom-left-radius: 6px
+    }
+
+    .fbchat-input {
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      border-top: 1px solid #e5e7eb;
+      background: #fff
+    }
+
+    .fbchat-input input {
+      flex: 1;
+      border: 1px solid #e5e7eb;
+      border-radius: 9999px;
+      padding: 10px 14px;
+      font-size: 14px
+    }
+
+    .fbchat-input button {
+      border: 0;
+      background: #1d1f23;
+      color: #fff;
+      border-radius: 9999px;
+      padding: 10px 14px;
+      cursor: pointer
+    }
+  </style>
+  <div id="fbchat" class="fbchat-panel">
+    <div class="fbchat-header">
+      <div class="fbchat-title">Hỗ trợ tuyển dụng</div>
+      <button class="fbchat-close" onclick="toggleChat(false)">Ẩn</button>
+    </div>
+    <div id="fbchatBody" class="fbchat-body"></div>
+    <div class="fbchat-input">
+      <input id="fbchatInput" placeholder="Nhập tin nhắn..." />
+      <button id="fbchatSend" onclick="fbchatSend()">Gửi</button>
+    </div>
+  </div>
+  <div class="fbchat-btn" onclick="toggleChat()" title="Chat hỗ trợ">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4h16v12H7l-3 3V4z" fill="currentColor" />
+    </svg>
+  </div>
+  <script>
+    function toggleChat(open) {
+      const panel = document.getElementById('fbchat');
+      const isOpen = panel.style.display === 'flex';
+      const next = (open === undefined) ? !isOpen : !!open;
+      panel.style.display = next ? 'flex' : 'none';
+      if (next && !panel.dataset.init) {
+        panel.dataset.init = '1';
+        fbchatAppend('Xin chào! Tôi có thể hỗ trợ gì cho bạn?', 'bot');
+      }
+      if (next) { setTimeout(() => document.getElementById('fbchatInput').focus(), 50); }
+    }
+    function fbchatAppend(text, role) {
+      const body = document.getElementById('fbchatBody');
+      const div = document.createElement('div');
+      div.className = 'fbchat-msg ' + (role === 'user' ? 'fbchat-user' : 'fbchat-bot');
+      div.textContent = text;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+    }
+    async function fbchatSend() {
+      const input = document.getElementById('fbchatInput');
+      const text = (input.value || '').trim();
+      if (!text) return;
+      fbchatAppend(text, 'user');
+      input.value = '';
+      const btn = document.getElementById('fbchatSend');
+      btn.disabled = true; btn.textContent = '...';
+      try {
+        const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, context: { job_id: jobId } }) });
+        const data = await res.json();
+        if (data.reply) { fbchatAppend(data.reply, 'bot'); }
+        else fbchatAppend('Lỗi: ' + (data.error || 'không xác định'), 'bot');
+      } catch (e) { fbchatAppend('Không gửi được tin nhắn.', 'bot'); }
+      finally { btn.disabled = false; btn.textContent = 'Gửi'; }
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target && e.target.id === 'fbchatInput') {
+        e.preventDefault(); fbchatSend();
+      }
+    });
+  </script>
+  <script>
+    const jobId = "{{ job.id }}";
+    const cvList = document.getElementById('cvList');
+    const btnUpload = document.getElementById('btnUpload');
+    const cvFiles = document.getElementById('cvFiles');
+    const btnEditJobName = document.getElementById('btnEditJobName');
+    const btnDeleteJob = document.getElementById('btnDeleteJob');
+    const btnReplaceJD = document.getElementById('btnReplaceJD');
+    const inputReplaceJD = document.getElementById('inputReplaceJD');
+
+
+    function pill(text) {
+      return `<span class="inline-block bg-gray-100 text-gray-700 text-sm px-3 py-1.5 rounded mr-1 mb-1">${text}</span>`;
+    }
+
+    function section(title, body) {
+      return `
+        <div class="mb-3">
+          <h5 class="font-medium text-gray-800">${title}</h5>
+          <div class="mt-1">${body || '<span class=\'text-gray-500 text-sm\'>Không có dữ liệu</span>'}</div>
+        </div>`;
+    }
+
+    function renderParsedCv(el, data) {
+      if (!data) { el.innerHTML = ''; return; }
+      const p = data.personal_info || {};
+      const skills = data.skills || {};
+      const edu = data.education || [];
+      const exp = data.experience || [];
+      const certs = data.certifications || [];
+
+      const personalHtml = `
+        <div class="grid md:grid-cols-2 gap-2 text-sm">
+          <div><span class="text-gray-500">Họ tên:</span> ${p.name || '-'}</div>
+          <div><span class="text-gray-500">Email:</span> ${p.email || '-'}</div>
+          <div><span class="text-gray-500">SĐT:</span> ${p.phone || '-'}</div>
+          <div><span class="text-gray-500">Địa chỉ:</span> ${p.address || '-'}</div>
+        </div>`;
+
+      const techSkills = (skills.technical || []).map(pill).join('');
+      const softSkills = (skills.soft || []).map(pill).join('');
+
+      const eduHtml = (edu || []).map(e => {
+        return `<div class="text-sm border-b py-1">
+          <div class="font-medium">${e.institution || ''}</div>
+          <div>${e.degree || ''} ${e.major ? ' - ' + e.major : ''}</div>
+          <div class="text-xs text-gray-500">${e.graduation_year || ''}</div>
+        </div>`;
+      }).join('');
+
+      const expHtml = (exp || []).map(x => {
+        return `<div class="text-sm border-b py-1">
+          <div class="font-medium">${x.position || ''} ${x.company ? '@ ' + x.company : ''}</div>
+          <div class="text-xs text-gray-500">${x.duration || ''}</div>
+          ${x.description ? `<div class="text-gray-700">${x.description}</div>` : ''}
+        </div>`;
+      }).join('');
+
+      const certHtml = (certs || []).map(pill).join('');
+
+      el.innerHTML = [
+        section('Thông tin cá nhân', personalHtml),
+        section('Kỹ năng chuyên môn', techSkills),
+        section('Kỹ năng mềm', softSkills),
+        section('Học vấn', eduHtml),
+        section('Kinh nghiệm', expHtml),
+        section('Chứng chỉ', certHtml)
+      ].join('');
+    }
+
+    function scoreBadge(score) {
+      let color = 'bg-gray-200 text-gray-800';
+      if (score >= 80) color = 'bg-green-100 text-green-800';
+      else if (score >= 60) color = 'bg-yellow-100 text-yellow-800';
+      else color = 'bg-red-100 text-red-800';
+      return `<span class="text-xs ${color} px-2 py-0.5 rounded">${score ?? '-'}%</span>`;
+    }
+
+    function progressBar(score) {
+      const s = Math.max(0, Math.min(100, Number(score || 0)));
+      const bar = `<div class="w-full bg-gray-200 rounded h-2">
+        <div class="h-2 bg-blue-600 rounded" style="width:${s}%"></div>
+      </div>`;
+      return `<div class="flex items-center gap-2">${bar}<span class="text-xs text-gray-600 w-10 text-right">${s}%</span></div>`;
+    }
+
+    function renderScoreSummary(el, r) {
+      if (!el) return;
+      if (!r) { el.innerHTML = ''; return; }
+      const overall = r.overall_score || {};
+      const summaryHtml = `
+        <div class="border rounded p-3">
+          <div class="flex items-center justify-between">
+            <h5 class="font-medium">Điểm tổng</h5>
+            ${scoreBadge(overall.score)}
+          </div>
+          <div class="mt-1">${progressBar(overall.score)}</div>
+          ${overall.summary ? `<p class=\"text-xs text-gray-600 mt-1\">${overall.summary}</p>` : ''}
+        </div>`;
+      el.innerHTML = summaryHtml;
+    }
+
+
+    function toArray(v) {
+      if (Array.isArray(v)) return v;
+      if (v === null || v === undefined) return [];
+      // if it's an object, try to flatten values; else, wrap as single item string
+      if (typeof v === 'object') return Object.values(v).flat().filter(Boolean);
+      return [String(v)];
+    }
+
+    function renderCriteriaBlock(label, obj) {
+      if (!obj) return '';
+      const matches = toArray(obj.cv_matches).map(x => pill(x)).join('');
+      const missing = toArray(obj.missing).map(x => pill(x)).join('');
+      const jdReq = toArray(obj.jd_requirements).map(x => pill(x)).join('');
+      const rationale = obj.rationale ? `<p class="text-xs text-gray-600">${obj.rationale}</p>` : '';
+      return `
+        <div class="border rounded p-4 text-base">
+          <div class="flex items-center justify-between mb-2">
+            <h5 class="font-medium">${label}</h5>
+            ${scoreBadge(obj.score)}
+          </div>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div><div class="text-gray-500 text-xs mb-1">CV matches</div>${matches || '<span class="text-gray-400">-</span>'}</div>
+            <div><div class="text-gray-500 text-xs mb-1">Yêu cầu JD</div>${jdReq || '<span class="text-gray-400">-</span>'}</div>
+            <div><div class="text-gray-500 text-xs mb-1">Thiếu</div>${missing || '<span class="text-gray-400">-</span>'}</div>
+          </div>
+          <div class="mt-2">${rationale}</div>
+        </div>`;
+
+      // Job-level actions
+      btnEditJobName.addEventListener('click', async () => {
+        const name = prompt('Nhập tên Job mới:');
+        if (!name) return;
+        const fd = new FormData();
+        fd.append('name', name);
+        const res = await fetch(`/jobs/${jobId}`, { method: 'PATCH', body: fd });
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || 'Cập nhật công việc thất bại'); return; }
+        location.reload();
+      });
+
+      btnDeleteJob.addEventListener('click', async () => {
+        if (!confirm('Xóa Job này? Toàn bộ CV sẽ bị xóa khỏi hệ thống.')) return;
+        const res = await fetch(`/jobs/${jobId}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || 'Xóa công việc thất bại'); return; }
+        window.location.href = '/';
+      });
+
+      btnReplaceJD.addEventListener('click', () => inputReplaceJD.click());
+      inputReplaceJD.addEventListener('change', async () => {
+        if (!inputReplaceJD.files.length) return;
+        const fd = new FormData();
+        fd.append('jd', inputReplaceJD.files[0]);
+        const res = await fetch(`/jobs/${jobId}/jd`, { method: 'PATCH', body: fd });
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || 'Thay JD thất bại'); return; }
+        location.reload();
+      });
+
+
+    }
+
+    function renderScoreReport(el, r) {
+      if (!r) { el.innerHTML = ''; return; }
+      const overall = r.overall_score || {};
+      const c = (r.criteria_analysis || {});
+      const overallHtml = `
+        <div class="mb-3">
+          <div class="flex items-center justify-between">
+            <h5 class="font-semibold">Điểm tổng</h5>
+            ${scoreBadge(overall.score)}
+          </div>
+          <div class="mt-1">${progressBar(overall.score)}</div>
+          ${overall.summary ? `<p class="text-xs text-gray-600 mt-1">${overall.summary}</p>` : ''}
+        </div>`;
+      const blocks = [
+        renderCriteriaBlock('Kỹ năng', c.skills),
+        renderCriteriaBlock('Kinh nghiệm (năm)', c.experience_years),
+        renderCriteriaBlock('Học vấn', c.education),
+        renderCriteriaBlock('Chứng chỉ', c.certificates)
+      ].join('<div class="h-3"></div>');
+      el.innerHTML = overallHtml + blocks;
+    }
+
+    async function loadCVs() {
+      const res = await fetch(`/jobs/${jobId}/cvs`);
+      const data = await res.json();
+      renderCVs((data && data.cvs) || []);
+    }
+
+    function renderCVs(items) {
+      cvList.innerHTML = '';
+      if (!items.length) {
+        cvList.innerHTML = '<p class="text-gray-500 text-sm">Chưa có CV nào.</p>';
+        return;
+      }
+      items.forEach(cv => {
+        const wrap = document.createElement('div');
+        wrap.className = 'border rounded p-4';
+        wrap.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-medium">${cv.file_name}</p>
+              <p class="text-xs text-gray-500">${cv.created_at || ''}</p>
+            </div>
+            <div class="space-x-2">
+              <button data-parse class="px-3 py-1 bg-indigo-600 text-white rounded">Trích xuất thông tin</button>
+              <button data-score class="px-3 py-1 bg-blue-600 text-white rounded">Chấm điểm</button>
+              <button data-toggle class="px-3 py-1 border rounded">Chi tiết</button>
+              <button data-delete class="px-3 py-1 bg-red-600 text-white rounded">Xóa</button>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div data-summary class="mb-3"></div>
+            <div data-details class="grid md:grid-cols-2 gap-4 hidden">
+              <div data-parsed-container>
+                <h4 class="font-semibold mb-2">Thông tin trích xuất</h4>
+                <div data-parsed class="text-lg text-gray-700"></div>
+              </div>
+              <div data-score-container>
+                <h4 class="font-semibold mb-2">Kết quả chấm điểm</h4>
+                <div data-scorebox class="text-lg text-gray-700"></div>
+              </div>
+            </div>
+          </div>
+        `;
+        const parsedContainer = wrap.querySelector('[data-parsed]');
+        const scoreContainer = wrap.querySelector('[data-scorebox]');
+        const parseBtn = wrap.querySelector('[data-parse]');
+        const scoreBtn = wrap.querySelector('[data-score]');
+        const toggleBtn = wrap.querySelector('[data-toggle]');
+        const deleteBtn = wrap.querySelector('[data-delete]');
+        const detailsDiv = wrap.querySelector('[data-details]');
+        const summaryDiv = wrap.querySelector('[data-summary]');
+
+        // initial renders
+        if (cv.parsed_data) renderParsedCv(parsedContainer, cv.parsed_data);
+        if (cv.score_report) {
+          renderScoreSummary(summaryDiv, cv.score_report);
+          renderScoreReport(scoreContainer, cv.score_report);
+        }
+
+        // hide action buttons if already done
+        if (cv.parsed_data) parseBtn.classList.add('hidden');
+        if (cv.score_report) scoreBtn.classList.add('hidden');
+
+        toggleBtn.addEventListener('click', () => {
+          detailsDiv.classList.toggle('hidden');
+        });
+
+        parseBtn.addEventListener('click', async () => {
+          detailsDiv.classList.remove('hidden');
+          parsedContainer.innerHTML = '<p class="text-gray-500">Đang phân tích...</p>';
+          parseBtn.disabled = true;
+          try {
+            const res = await fetch(`/jobs/${jobId}/cvs/${cv.id}/parse`, { method: 'POST' });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Lỗi phân tích');
+            renderParsedCv(parsedContainer, data.cv.parsed_data);
+            parseBtn.classList.add('hidden');
+          } catch (err) { alert(err.message); parsedContainer.innerHTML = ''; }
+          finally { parseBtn.disabled = false; }
+        });
+
+        // Xóa CV
+        deleteBtn.addEventListener('click', async () => {
+          if (!confirm('Xóa CV này?')) return;
+          deleteBtn.disabled = true;
+          try {
+            const res = await fetch(`/jobs/${jobId}/cvs/${cv.id}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Xóa CV thất bại');
+            await loadCVs();
+          } catch (err) {
+            alert(err.message);
+          } finally {
+            deleteBtn.disabled = false;
+          }
+        });
+
+        // Chấm điểm
+        scoreBtn.addEventListener('click', async () => {
+          detailsDiv.classList.remove('hidden');
+          scoreContainer.innerHTML = '<p class="text-gray-500">Đang chấm điểm...</p>';
+          scoreBtn.disabled = true;
+          try {
+            const res = await fetch(`/jobs/${jobId}/cvs/${cv.id}/score`, { method: 'POST' });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Lỗi chấm điểm');
+            renderScoreSummary(summaryDiv, data.cv.score_report);
+            renderScoreReport(scoreContainer, data.cv.score_report);
+            scoreBtn.classList.add('hidden');
+          } catch (err) { alert(err.message); scoreContainer.innerHTML = ''; }
+          finally { scoreBtn.disabled = false; }
+        });
+        cvList.appendChild(wrap);
+      });
+    }
+
+    btnUpload.addEventListener('click', () => cvFiles.click());
+    cvFiles.addEventListener('change', async () => {
+      if (!cvFiles.files.length) return;
+      const fd = new FormData();
+      for (const f of cvFiles.files) { fd.append('files', f); }
+      const res = await fetch(`/jobs/${jobId}/cvs`, { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error || 'Lỗi tải lên CV'); return; }
+      await loadCVs();
+      cvFiles.value = '';
+    });
+
+    loadCVs();
+  </script>
+</body>
+
+</html>

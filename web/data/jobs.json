@@ -1,0 +1,296 @@
+{
+  "jobs": [
+    {
+      "id": "3ce579f5-6784-4b3e-97c6-f237759c062a",
+      "name": "AI",
+      "jd_file": "uploads\\jobs\\3ce579f5-6784-4b3e-97c6-f237759c062a\\JD_Intern_AI_Engineer_technica_v1.1_1.docx",
+      "jd_text": "Vị trí:  Intern Ai Engineer\nCông ty cổ phần Technica\nĐịa điểm: Phòng 512, Tầng 5, Tòa Toyota số 15 Phạm Hùng, Nam Từ Liêm, Hà Nội \nThời gian làm việc: Thứ 2 – Thứ 6 (8h30~17h30)\nMức hỗ trợ: 3 triệu – 5 triệu\nContact: Yến Nguyễn/ yennth@technica.ai \nPhone/ Zalo: 0373406840\nYêu cầu\n・Sinh viên năm 3,4, năm cuối hoặc đã tốt nghiệp Đại học chuyên nghành công nghệ thông tin hoặc toán tin học\n・Yêu thích làm việc với các bài toán OCR, LLMs, GenAi, object detection… \n・Hiểu biết ngôn ngữ lập trình Python…là 1 lợi thế\n・Tiếng Anh đọc viết tốt\n・Khả năng quản lý thời gian hiệu quả và cách giải quyết công việc linh hoạt\nNội dung công việc\n・Làm việc cùng team AI để phát triển các giải pháp, sản phẩm về LLMs, GenAI, computer vision…\n・Tham gia các dự án ứng dụng công nghệ Ai của công ty.\n・Phân tích và đánh giá thiết kế mô hình phân tích.\nQuyền lợi\n・Lương thực tập hấp dẫn và có cơ hội trở thành nhân viên chính thức, cơ hội gắn bó lâu dài với công ty\n・Được hướng dẫn, đào tạo chuyên môn và các nội dung có yêu cầu trong công việc\n・Cơ hội phát triển ngôn ngữ, sử dụng máy tính công ty\n・Tham gia vào các dự án với đội ngũ, môi trường làm việc thân thiện, tự do và sáng tạo\n・Tham gia chương trình đào tạo nội bộ về AI\nGiới Thiệu về Công Ty\nLà một công ty tiên phong về công nghệ với chuyên môn sâu về khoa học dữ liệu và AI, Technica cam kết giúp các doanh nghiệp vượt qua các thách thức kỹ thuật phức tạp nhất và thúc đẩy tăng trưởng kinh doanh.\nTại Sao Làm Việc Với Chúng Tôi?\nNăng lực chuyên môn\nKhông giống như môi trường học thuật, nhiều vấn đề thực tiễn trong kinh doanh không thể giải quyết tốt chỉ với công nghệ AI. Đội ngũ của chúng tôi không chỉ có chuyên môn về khoa học dữ liệu và học máy, mà còn có kinh nghiệm thực tiễn phong phú trong các lĩnh vực như xử lý hình ảnh và âm thanh. Bằng cách sử dụng các thuật toán học mới nhất và kết hợp với các công nghệ đa dạng, chúng tôi giúp khách hàng khai phá tiềm năng AI và tạo ra những cơ hội mới.\nKhả năng tư vấn\nĐể áp dụng AI hiệu quả, điều quan trọng là phải hiểu rõ các vấn đề cụ thể của khách hàng. Khả năng thảo luận và đề xuất các giải pháp hợp lý nhằm tối ưu hoá lợi ích từ AI là cần thiết. Điều này bao gồm đánh giá dữ liệu của công ty, khả năng phân tích và xác định các điểm yếu và khu vực cần cải thiện.\nKhả năng triển khai\nMột trong những đặc điểm của các dự án AI là tính bất định. Trong quá trình xây dựng mô hình học máy, chúng tôi phải thử nghiệm các thuật toán khác nhau để cải thiện độ chính xác. Đối diện với dữ liệu thực tế, chúng tôi thường phải sáng tạo để vượt qua những khó khăn không mong đợi. Các mô hình học máy cũng nhanh chóng trở nên lỗi thời, đòi hỏi điều chỉnh liên tục.\nWebsite: https://technica.ai/",
+      "created_at": "2025-11-19T08:24:04.806202Z",
+      "cvs": [
+        {
+          "id": "d39a6437-80e1-45da-8f32-77e5b5761180",
+          "file_name": "AI_E.pdf",
+          "file_path": "uploads\\jobs\\3ce579f5-6784-4b3e-97c6-f237759c062a\\cvs\\AI_E.pdf",
+          "extracted_text": "0962865038\n25/01/2003\nMale\nhuydcb3@gmail.com\n25/01/2003\nMai Dich, Cau Giay, Ha Noi\nAWA R D\nDeveloped a sentence completion\nsupport model using GPT-2.\nBuilt a driver drowsiness warning\nsystem using K-means.\nDiabetic Retinopathy Diagnosis on\nFundus Images Using Deep Learning\nResNet Model\nhttps://github.com/Huypluie/Huy/tree/d\nevelop\nAn NLP-Based System for Assessing the\nMatch Between CV and JD\nC E RT I F I C AT I O N\nAI ENGINEER\nNGUYỄN ĐỨC HUY\nEDUCATION\nHanoi University of Industry\nComputer Science\n08/2021-09/2025\nCPA 3.2\nSKILL\nOperating Systems\nWindow, Linux\nProgramming Languages\nPython, C++, C#, Javascript\nService\nPytorch, Tensor�ow, Hugging Face, Ollama, LangChain\nDevOps Tools\nGit\nEXPERICENCE\nHEXAGON Co., Ltd\nDev tool Python\nI am applying for the position of AI Engineer Intern at your\ncompany. With strong technical and algorithmic thinking,\nalong with a quick ability to learn new technologies, I have\na deep passion for technology, especially Arti�cial\nIntelligence.\nI look forward to the opportunity to work and contribute to\nthe company, striving to learn from a professional\nenvironment, gain practical experience, and gradually\ndevelop my expertise.\nMy goal in the next 3-4 years is to become a solid AI\nEngineer with strong foundations in programming, data\nprocessing, and machine learning model deployment. I\naim to participate in real-world AI projects to build, train,\nand deploy AI models, progressing toward a specialized\nrole in Arti�cial Intelligence.\nTOIEC (735/990)\n2024\nF O R E I G N  L A N G U A G E\nListening\nReading\nA D VA N TA G E\nStrong discipline: strictly following\nwork regulations.\nSkilled in research and problem-\nsolving.\nPassion for continuous learning.\n01/2022-03/2025\nResponsibilities & Achievements:\n- Developed Python automation tools to support multiple\nfunctions.\n- Gained skills in programming, teamwork, and problem-\nsolving.\n- Exposed to new technologies and complex business\nproblems.\n© Joboko.com",
+          "parsed_data": {
+            "personal_info": {
+              "name": "NGUYỄN ĐỨC HUY",
+              "date_of_birth": "25/01/2003",
+              "gender": "Male",
+              "address": "Mai Dich, Cau Giay, Ha Noi",
+              "email": "huydcb3@gmail.com",
+              "phone": "0962865038"
+            },
+            "education": [
+              {
+                "degree": "Computer Science",
+                "institution": "Hanoi University of Industry",
+                "year": "08/2021-09/2025",
+                "description": "CPA 3.2"
+              }
+            ],
+            "experience": [
+              {
+                "title": "Dev tool Python",
+                "company": "HEXAGON Co., Ltd",
+                "duration": "01/2022-03/2025",
+                "description": "- Developed Python automation tools to support multiple functions.\n- Gained skills in programming, teamwork, and problem-solving.\n- Exposed to new technologies and complex business problems."
+              }
+            ],
+            "skills": {
+              "technical": [
+                "window",
+                "linux",
+                "python",
+                "c++",
+                "c#",
+                "javascript",
+                "pytorch",
+                "tensorflow",
+                "hugging face",
+                "ollama",
+                "langchain",
+                "git",
+                "gpt-2",
+                "k-means",
+                "deep learning",
+                "resnet",
+                "nlp",
+                "automation tools",
+                "programming"
+              ],
+              "soft": [
+                "strong discipline",
+                "research",
+                "problem-solving",
+                "continuous learning",
+                "teamwork",
+                "algorithmic thinking",
+                "quick learning"
+              ]
+            },
+            "certifications": [
+              "AI ENGINEER",
+              "TOIEC (735/990) 2024"
+            ]
+          },
+          "score_report": {
+            "overall_score": {
+              "score": 96,
+              "summary": "Ứng viên có mức độ phù hợp xuất sắc với vị trí Intern AI Engineer, đặc biệt về kỹ năng kỹ thuật và kinh nghiệm dự án thực tế liên quan."
+            },
+            "criteria_analysis": {
+              "skills": {
+                "score": 95,
+                "jd_requirements": [
+                  "Yêu thích làm việc với các bài toán OCR, LLMs, GenAi, object detection",
+                  "Hiểu biết ngôn ngữ lập trình Python",
+                  "Computer Vision",
+                  "Khả năng nghiên cứu và giải quyết vấn đề",
+                  "Khả năng quản lý thời gian hiệu quả và cách giải quyết công việc linh hoạt"
+                ],
+                "cv_matches": [
+                  "Python",
+                  "LLMs (mô hình hỗ trợ hoàn thành câu sử dụng GPT-2, Ollama, LangChain, hệ thống NLP)",
+                  "GenAI (thông qua kinh nghiệm về LLMs)",
+                  "Object detection (hệ thống cảnh báo buồn ngủ sử dụng K-means)",
+                  "Computer Vision (chẩn đoán võng mạc, ResNet, Pytorch, Tensorflow)",
+                  "Khả năng nghiên cứu và giải quyết vấn đề (điểm mạnh được nêu)",
+                  "Git (DevOps Tools)"
+                ],
+                "missing": [
+                  "OCR (được đề cập trong JD nhưng không rõ ràng trong CV, tuy nhiên kỹ năng thị giác máy tính rộng đủ để bao quát)",
+                  "Khả năng quản lý thời gian hiệu quả (không được đề cập rõ ràng)"
+                ],
+                "rationale": "Ứng viên thể hiện các kỹ năng kỹ thuật rất mạnh và có kinh nghiệm dự án trực tiếp liên quan đến LLMs, GenAI, Computer Vision, Object Detection và Python, đáp ứng vượt trội các yêu cầu kỹ thuật của JD. Một số kỹ năng mềm không được nêu rõ."
+              },
+              "experience_years": {
+                "score": 100,
+                "jd_requirements": "Sinh viên năm 3, 4, năm cuối hoặc đã tốt nghiệp Đại học",
+                "cv_value": 3,
+                "rationale": "Ứng viên đang là sinh viên năm 3-4 chuyên ngành Khoa học Máy tính và có hơn 3 năm kinh nghiệm thực tập phát triển công cụ Python (01/2022-03/2025), hoàn toàn phù hợp với yêu cầu của JD về tình trạng học vấn và có kinh nghiệm thực tiễn đáng kể cho một vị trí intern."
+              },
+              "education": {
+                "score": 100,
+                "jd_requirements": "Đại học chuyên nghành công nghệ thông tin hoặc toán tin học",
+                "cv_matches": "Cử nhân Khoa học Máy tính, Đại học Công nghiệp Hà Nội",
+                "rationale": "Chuyên ngành Khoa học Máy tính (Computer Science) của ứng viên tại Đại học Công nghiệp Hà Nội phù hợp hoàn hảo với yêu cầu của JD về trình độ và chuyên ngành."
+              },
+              "certificates": {
+                "score": 80,
+                "jd_requirements": [
+                  "Tiếng Anh đọc viết tốt"
+                ],
+                "cv_matches": [
+                  "TOEIC (735/990)"
+                ],
+                "missing": [],
+                "rationale": "JD không yêu cầu chứng chỉ kỹ thuật cụ thể, tuy nhiên chứng chỉ TOEIC (735/990) của ứng viên chứng minh khả năng tiếng Anh 'đọc viết tốt' như một yêu cầu của JD. Chứng chỉ 'AI ENGINEER' không rõ ràng về loại hình."
+              }
+            }
+          },
+          "created_at": "2025-11-19T08:34:38.773933Z"
+        },
+        {
+          "id": "94ded052-5ac9-4c46-9609-135c6d2dba8a",
+          "file_name": "AI_VN.pdf",
+          "file_path": "uploads\\jobs\\3ce579f5-6784-4b3e-97c6-f237759c062a\\cvs\\AI_VN.pdf",
+          "extracted_text": "0962865038\n25/01/2003\nNam\nhuydcb3@gmail.com\n25/01/2003\nMai Dịch, Cầu Giấy, Hà Nội\nD Ự  Á N\n- Xây dựng mô hình hỗ trợ hoàn thiện\ncâu với GPT-2.\n- Xây dựng hệ thống cảnh báo ngủ gật\ntrên xe với Kmean.\n- Phát triển hệ thống hỗ trợ dự đoán\nbệnh \"Tiểu đường giác mạc\" qua ảnh\nchụp sử dụng mô hình ResNet.\nhttps://github.com/Huypluie/Huy/tree/d\nevelop\nỨng dụng NLP trong hệ thống đánh giá\nmức độ phù hợp giữa hồ sơ ứng viên và\nmô tả công việc\nC H Ứ N G  C H Ỉ\nAI ENGINEER\nNGUYỄN ĐỨC HUY\nHỌC VẤN\nTrường Đại học Công Nghiệp Hà Nội\nKhoa học máy tính\n08/2021-09/2025\nCPA 3.2\nSKILL\nHệ điều hành\nWindow, Linux\nNgôn ngữ lập trình\nPython, C++, C#, Javascript\nService\nPytorch, Tensor�ow, Hugging Face, Ollama, LangChain\nDevOps Tools\nGit\nKINH NGHIỆM\nHEXAGON Co., Ltd\nDev tool Python\n01/2022-03/2025\nTôi mong muốn ứng tuyển vào vị trí Intern AI Engineer tại\ncông ty. Là một người có tư duy kỹ thuật, thuật toán tốt và\nhọc hỏi công nghệ mới nhanh, tôi có niềm đam mê sâu\nsắc với lĩnh vực công nghệ đặc biệt là AI. Tôi rất hy vọng\ntôi có cơ hội được làm việc và cống hiến tại công ty. Tôi\nsẽ cố gắng nỗ lực học hỏi từ môi trường chuyên nghiệp,\ntích lũy kinh nghiệm thực tế và từng bước phát triển năng\nlực chuyên môn. Mục tiêu trong 3-4 năm tới của tôi là trở\nthành một AI Engineer có nền tảng vững chắc về lập trình,\nxử lý dữ liệu và triển khai mô hình học máy.Tôi mong\nmuốn được tham gia vào các dự án AI thực tế để tích lũy\nkinh nghiệm, từng bước hoàn thiện kỹ năng xây dựng,\nhuấn luyện và triển khai mô hình AI, hướng tới vai trò\nchuyên sâu trong lĩnh vực Trí tuệ nhân tạo.\nTOIEC (735/990)\n2024\nT I Ế N G  A N H\nNghe\nĐọc\nƯ U  Đ I Ể M\nTính kỷ luật cao: tuân thủ quy định khi\nlàm việc.\nTìm kiếm thông tin và giải quyết vấn\nđề.\nThích học hỏi.\nKĩ năng làm việc nhóm.\n- Viết tool hỗ trợ tự động hóa các chức năng kiểm thử\nwebsite.\n- Xây dựng hệ thống MMO.\n- Quản lí các loại tài nguyên.\n© Joboko.com",
+          "parsed_data": {
+            "personal_info": {
+              "name": "NGUYỄN ĐỨC HUY",
+              "date_of_birth": "25/01/2003",
+              "gender": "Nam",
+              "address": "Mai Dịch, Cầu Giấy, Hà Nội",
+              "email": "huydcb3@gmail.com",
+              "phone": "0962865038"
+            },
+            "education": [
+              {
+                "degree": "Khoa học máy tính",
+                "institution": "Trường Đại học Công Nghiệp Hà Nội",
+                "year": "2025",
+                "description": "CPA 3.2"
+              }
+            ],
+            "experience": [
+              {
+                "title": "Dev tool Python",
+                "company": "HEXAGON Co., Ltd",
+                "duration": "01/2022-03/2025",
+                "description": "- Viết tool hỗ trợ tự động hóa các chức năng kiểm thử website.\n- Xây dựng hệ thống MMO.\n- Quản lí các loại tài nguyên."
+              },
+              {
+                "title": "Xây dựng mô hình hỗ trợ hoàn thiện câu với GPT-2",
+                "company": null,
+                "duration": null,
+                "description": null
+              },
+              {
+                "title": "Xây dựng hệ thống cảnh báo ngủ gật trên xe với Kmean",
+                "company": null,
+                "duration": null,
+                "description": null
+              },
+              {
+                "title": "Phát triển hệ thống hỗ trợ dự đoán bệnh \"Tiểu đường giác mạc\" qua ảnh chụp sử dụng mô hình ResNet",
+                "company": null,
+                "duration": null,
+                "description": null
+              },
+              {
+                "title": "Ứng dụng NLP trong hệ thống đánh giá mức độ phù hợp giữa hồ sơ ứng viên và mô tả công việc",
+                "company": null,
+                "duration": null,
+                "description": null
+              }
+            ],
+            "skills": {
+              "technical": [
+                "window",
+                "linux",
+                "python",
+                "c++",
+                "c#",
+                "javascript",
+                "pytorch",
+                "tensorflow",
+                "hugging face",
+                "ollama",
+                "langchain",
+                "git",
+                "gpt-2",
+                "kmean",
+                "resnet",
+                "nlp"
+              ],
+              "soft": [
+                "discipline",
+                "problem solving",
+                "information retrieval",
+                "eager to learn",
+                "teamwork"
+              ]
+            },
+            "certifications": [
+              "ai engineer",
+              "toeic (735/990)"
+            ]
+          },
+          "score_report": {
+            "overall_score": {
+              "score": 94,
+              "summary": "Ứng viên phù hợp xuất sắc với vị trí Intern AI Engineer, đặc biệt về kỹ năng chuyên môn, kinh nghiệm thực tế và học vấn vững chắc."
+            },
+            "criteria_analysis": {
+              "skills": {
+                "score": 90,
+                "jd_requirements": [
+                  "OCR",
+                  "LLMs",
+                  "GenAI",
+                  "Object Detection",
+                  "Computer Vision",
+                  "Python",
+                  "Tiếng Anh đọc viết tốt",
+                  "Khả năng quản lý thời gian hiệu quả",
+                  "Cách giải quyết công việc linh hoạt",
+                  "Phân tích và đánh giá thiết kế mô hình phân tích"
+                ],
+                "cv_matches": [
+                  "Python",
+                  "LLMs (GPT-2, NLP, Hugging Face, Ollama, LangChain)",
+                  "GenAI (Hugging Face, Ollama, LangChain)",
+                  "Object Detection (Kmean trong dự án cảnh báo ngủ gật)",
+                  "Computer Vision (ResNet trong dự án chẩn đoán bệnh)",
+                  "Tiếng Anh (TOEIC 735/990)",
+                  "Tìm kiếm thông tin và giải quyết vấn đề",
+                  "Tính kỷ luật cao",
+                  "Kỹ năng làm việc nhóm",
+                  "Phân tích và đánh giá thiết kế mô hình phân tích (thông qua các dự án đã thực hiện)"
+                ],
+                "missing": [
+                  "OCR",
+                  "Khả năng quản lý thời gian hiệu quả (không được nêu rõ ràng)"
+                ],
+                "rationale": "Ứng viên có các kỹ năng chuyên môn rất mạnh về Python, LLMs, GenAI, Computer Vision và Object Detection, được chứng minh qua kinh nghiệm dự án và các công cụ được liệt kê. Khả năng tiếng Anh tốt (TOEIC 735/990). Các kỹ năng mềm như giải quyết vấn đề và tính kỷ luật cũng được đề cập. Yêu cầu về OCR không được nêu rõ trong CV và 'quản lý thời gian hiệu quả' không được liệt kê tường minh."
+              },
+              "experience_years": {
+                "score": 100,
+                "jd_requirements": "Sinh viên năm 3, 4, năm cuối hoặc đã tốt nghiệp Đại học",
+                "cv_value": 3,
+                "rationale": "Ứng viên đang là sinh viên năm 3/4 (dự kiến tốt nghiệp 09/2025), hoàn toàn phù hợp với yêu cầu về tình trạng sinh viên của JD. Ngoài ra, ứng viên còn có hơn 3 năm kinh nghiệm làm việc liên quan (01/2022-03/2025) tại HEXAGON Co., Ltd, đây là một điểm cộng rất lớn cho vị trí thực tập."
+              },
+              "education": {
+                "score": 100,
+                "jd_requirements": "Đại học chuyên nghành công nghệ thông tin hoặc toán tin học",
+                "cv_matches": "Cử nhân Khoa học máy tính",
+                "rationale": "Ứng viên đang theo học ngành Khoa học máy tính tại Trường Đại học Công Nghiệp Hà Nội, phù hợp hoàn hảo với yêu cầu về chuyên ngành của JD."
+              },
+              "certificates": {
+                "score": 90,
+                "jd_requirements": [
+                  "Tiếng Anh đọc viết tốt (không yêu cầu chứng chỉ cụ thể)"
+                ],
+                "cv_matches": [
+                  "TOEIC (735/990)"
+                ],
+                "missing": [],
+                "rationale": "JD không yêu cầu chứng chỉ chuyên môn cụ thể ngoài 'Tiếng Anh đọc viết tốt'. Ứng viên cung cấp chứng chỉ TOEIC 735/990, đây là minh chứng mạnh mẽ cho khả năng tiếng Anh tốt theo yêu cầu."
+              }
+            }
+          },
+          "created_at": "2025-11-19T08:39:55.615150Z"
+        }
+      ]
+    },
+    {
+      "id": "a036208b-24a7-48a6-8f85-9c4cd8a67ff6",
+      "name": "Frontend Dev",
+      "jd_file": "uploads\\jobs\\a036208b-24a7-48a6-8f85-9c4cd8a67ff6\\AI_VN.pdf",
+      "jd_text": "0962865038\n25/01/2003\nNam\nhuydcb3@gmail.com\n25/01/2003\nMai Dịch, Cầu Giấy, Hà Nội\nD Ự  Á N\n- Xây dựng mô hình hỗ trợ hoàn thiện\ncâu với GPT-2.\n- Xây dựng hệ thống cảnh báo ngủ gật\ntrên xe với Kmean.\n- Phát triển hệ thống hỗ trợ dự đoán\nbệnh \"Tiểu đường giác mạc\" qua ảnh\nchụp sử dụng mô hình ResNet.\nhttps://github.com/Huypluie/Huy/tree/d\nevelop\nỨng dụng NLP trong hệ thống đánh giá\nmức độ phù hợp giữa hồ sơ ứng viên và\nmô tả công việc\nC H Ứ N G  C H Ỉ\nAI ENGINEER\nNGUYỄN ĐỨC HUY\nHỌC VẤN\nTrường Đại học Công Nghiệp Hà Nội\nKhoa học máy tính\n08/2021-09/2025\nCPA 3.2\nSKILL\nHệ điều hành\nWindow, Linux\nNgôn ngữ lập trình\nPython, C++, C#, Javascript\nService\nPytorch, Tensor�ow, Hugging Face, Ollama, LangChain\nDevOps Tools\nGit\nKINH NGHIỆM\nHEXAGON Co., Ltd\nDev tool Python\n01/2022-03/2025\nTôi mong muốn ứng tuyển vào vị trí Intern AI Engineer tại\ncông ty. Là một người có tư duy kỹ thuật, thuật toán tốt và\nhọc hỏi công nghệ mới nhanh, tôi có niềm đam mê sâu\nsắc với lĩnh vực công nghệ đặc biệt là AI. Tôi rất hy vọng\ntôi có cơ hội được làm việc và cống hiến tại công ty. Tôi\nsẽ cố gắng nỗ lực học hỏi từ môi trường chuyên nghiệp,\ntích lũy kinh nghiệm thực tế và từng bước phát triển năng\nlực chuyên môn. Mục tiêu trong 3-4 năm tới của tôi là trở\nthành một AI Engineer có nền tảng vững chắc về lập trình,\nxử lý dữ liệu và triển khai mô hình học máy.Tôi mong\nmuốn được tham gia vào các dự án AI thực tế để tích lũy\nkinh nghiệm, từng bước hoàn thiện kỹ năng xây dựng,\nhuấn luyện và triển khai mô hình AI, hướng tới vai trò\nchuyên sâu trong lĩnh vực Trí tuệ nhân tạo.\nTOIEC (735/990)\n2024\nT I Ế N G  A N H\nNghe\nĐọc\nƯ U  Đ I Ể M\nTính kỷ luật cao: tuân thủ quy định khi\nlàm việc.\nTìm kiếm thông tin và giải quyết vấn\nđề.\nThích học hỏi.\nKĩ năng làm việc nhóm.\n- Viết tool hỗ trợ tự động hóa các chức năng kiểm thử\nwebsite.\n- Xây dựng hệ thống MMO.\n- Quản lí các loại tài nguyên.\n© Joboko.com",
+      "created_at": "2025-11-19T13:30:43.093534Z",
+      "cvs": []
+    }
+  ]
+}
